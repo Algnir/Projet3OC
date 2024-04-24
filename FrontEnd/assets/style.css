@@ -214,3 +214,14 @@ button:hover{
 .none{
 	display:none;
 }
+
+a:-webkit-any-link {
+	color:black;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+	color: #B1663C;
+}
+

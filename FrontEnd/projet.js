@@ -6,6 +6,8 @@ const categories = await reponse2.json();
 
 const porfolio = document.querySelector("#portfolio");//selection de la section portfolio//
 const gallery = document.querySelector(".gallery"); //selection de la div gallery dans la section portfolio//
+const footer = document.querySelector("footer");
+const body = document.querySelector("body");
 
 
 /*const buttonList = [Tous,Objets,Appartements,Hotels & Restaurants];*/
@@ -112,11 +114,21 @@ boutonHotelsetRestaurants.addEventListener("click", function () {
 //page de login//
 
 const login = document.getElementById("login");
-const projet = document.getElementById("login");
-const contact = document.getElementById("login");
+const projet = document.getElementById("projet");
+const contact = document.getElementById("pagecontact");
 const main = document.getElementById("main");
+const pageLogin = document.getElementById("pageLogin");
 login.addEventListener("click", function (){
     main.classList.add("none");
+    pageLogin.classList.remove("none");
+})
 
+projet.addEventListener("click", function (){
+    main.classList.remove("none");
+    pageLogin.classList.add("none");
+})
 
+contact.addEventListener("click", function (){
+    main.classList.remove("none");
+    pageLogin.classList.add("none");
 })
