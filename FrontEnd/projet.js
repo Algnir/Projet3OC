@@ -4,6 +4,8 @@ const works = await reponse.json();
 const reponse2 = await fetch("http://localhost:5678/api/categories");
 const categories = await reponse2.json();
 
+connexion();
+
 const porfolio = document.querySelector("#portfolio");//selection de la section portfolio//
 const gallery = document.querySelector(".gallery"); //selection de la div gallery dans la section portfolio//
 const footer = document.querySelector("footer");
@@ -56,12 +58,14 @@ genererWorks(works);
 genererFiltre(categories);
 
 
+
+
 //fonction des boutons filtres//
 const boutonTous = document.getElementById("0");
 boutonTous.classList.add("clicked");// affichage de Tous par défaut//
 boutonTous.addEventListener("click", function () {
 
-    boutonTous.classList.add("clicked");v
+    boutonTous.classList.add("clicked");
     boutonAppartements.classList.remove("clicked");
     boutonObjets.classList.remove("clicked");
     boutonHotelsetRestaurants.classList.remove("clicked");
@@ -114,14 +118,26 @@ boutonHotelsetRestaurants.addEventListener("click", function () {
 //page de login//
 
 const login = document.getElementById("login");
+if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){
+    login.innerText = "Logout"
+}
+
+login.addEventListener("click", function (){
+    if(login.innerText == "login"){
+    main.classList.add("none");
+    pageLogin.classList.remove("none");
+    }else {
+        logout();
+        login.innerText = "login"
+    }
+})
+
+
 const projet = document.getElementById("projet");
 const contact = document.getElementById("pagecontact");
 const main = document.getElementById("main");
 const pageLogin = document.getElementById("pageLogin");
-login.addEventListener("click", function (){
-    main.classList.add("none");
-    pageLogin.classList.remove("none");
-})
+
 
 projet.addEventListener("click", function (){
     main.classList.remove("none");
@@ -132,3 +148,43 @@ contact.addEventListener("click", function (){
     main.classList.remove("none");
     pageLogin.classList.add("none");
 })
+
+
+//Fonction envoye du formulaire pour connexion et récupération de l'userId et du token//
+export function connexion() {
+    const formulaireLogin = document.querySelector("#formulaireLogin");
+    formulaireLogin.addEventListener("submit", function (event) {
+        event.preventDefault()
+        const email = event.target.querySelector("#emailLogin");
+        const password = event.target.querySelector("#mdp");
+        const Users = {
+            "email": email.value,
+            "password": password.value,
+        };
+        const chargeUtile = JSON.stringify(Users);
+        try {fetch("http://localhost:5678/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body : chargeUtile
+        }).then(reponse =>reponse.json())
+        .then(login => {
+            window.localStorage.setItem("token",login.token);
+            window.localStorage.setItem("userId",login.userId);
+            if (window.localStorage.getItem("token") !== 'undefined') {
+                const login = document.getElementById("login");
+                login.innerText = "Logout";
+            }
+            
+        })}catch (error){
+            console.error(error);
+        }
+        
+    })
+    
+}
+
+
+function logout () {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+}
