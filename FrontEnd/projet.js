@@ -206,8 +206,34 @@ function logout () {
     localStorage.removeItem("userId");
 }
 
-const popup = document.getElementById("popup-overlay");
+
 //popup modif//
+
+const popup = document.getElementById("popup-overlay");
+const popupAjout = document.getElementById("popup-ajout");
+const popupSupprimer = document.getElementById("popup-supprimer");
+
+const boutonClosePopup = document.getElementById("closePopup");
+const boutonBackPopup = document.getElementById("backPopup");
+const boutonAjout = document.getElementById("ajouterPhoto");
+
 boutonModifier.addEventListener("click", function(){
     popup.classList.add("open");
+    popupSupprimer.classList.add("open");
+})
+
+boutonClosePopup.addEventListener("click", function(){
+    popup.classList.remove("open");
+    popupAjout.classList.remove("open");
+    popupSupprimer.classList.remove("open");
+})
+
+boutonAjout.addEventListener("click", function(){
+    popupAjout.classList.add("open");
+    popupSupprimer.classList.remove("open");
+})
+
+boutonBackPopup.addEventListener("click", function(){
+    popupSupprimer.classList.add("open");
+    popupAjout.classList.remove("open");
 })

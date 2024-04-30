@@ -299,6 +299,17 @@ div#pageLogin {
 	transform:translate(-50%,-50%);
 }
 
+#popup-ajout {
+	display:none;
+}
+
+#popup-supprimer{
+	display:none;
+}
 .fa-solid {
     color: var(--main-color);
+}
+
+.open{
+	display:block !important;
 }

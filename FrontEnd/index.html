@@ -30,34 +30,7 @@
 		</ul>
 	</nav>
 </header>
-<div id="popup-overlay">
-	<div class="popup-content">
-		<div id="galerieModif">
-			<button><i class="fa-solid fa-xmark"></i></button>
-			<h3>Galerie photo</h3>
-			<div class="worksDelete"></div>
-			<button id="ajouterPhoto">Ajouter une photo</button>
-		</div>
-		<div id="ajoutPhoto">
-			<button><i class="fa-solid fa-arrow-left"></i></button>
-			<button><i class="fa-solid fa-xmark"></i></button>
-			<h3>Ajout photo</h3>
-			<form>
-				<label for="newWork"><img></label>
-				<input type="image" name="newWork" id="newWork">
-				<label for="titreNewWork">Titre</label>
-				<input type="text" name="titreNewWork" id="titreNewWork">
-				<label for="categoriesNewWork">Titre</label>
-				<select name="categoriesNewWork" id="categoriesNewWork">
-					<options>Objets</options>
-					<options>Appartements</options>
-					<options>Hotels&restaurants</options>
-				</select>
-				<button type="submit" value="Envoyer" id="ajoutNewWork">Valider</button>
-			</form>
-		</div>
-	</div>
-</div>
+
 <main id="main">
 	<section id="introduction">
 		<figure>
@@ -71,8 +44,10 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<button id="modifier" class="none">modifier</button>
+		<div class="section-title">
+			<h2>Mes Projets</h2>
+			<button id="modifier" class="none">modifier</button>
+		</div>
 		<div class="filtres"></div>
 		<div class="gallery">
 		</div>
@@ -103,6 +78,35 @@
 		<button type="submit" value="Envoyer" id="connecter">Se connecter</button>
 	</form>
 	<a href="#">mot de passe oublié</a>
+</div>
+
+
+<div id="popup-overlay">
+	<div class="popup-content">
+		<button id="backPopup"><i class="fa-solid fa-arrow-left"></i></button>
+		<button id="closePopup"><i class="fa-solid fa-xmark"></i></button>
+		<div id="popup-supprimer">
+			<h3>Galerie photo</h3>
+			<div class="worksDelete"></div>
+			<button id="ajouterPhoto">Ajouter une photo</button>
+		</div>
+		<div id="popup-ajout">
+			<h3>Ajout photo</h3>
+			<form>
+				<label for="newWork"><img></label>
+				<input type="image" name="newWork" id="newWork">
+				<label for="titreNewWork">Titre</label>
+				<input type="text" name="titreNewWork" id="titreNewWork">
+				<label for="categoriesNewWork">Titre</label>
+				<select name="categoriesNewWork" id="categoriesNewWork">
+					<options>Objets</options>
+					<options>Appartements</options>
+					<options>Hotels&restaurants</options>
+				</select>
+				<button type="submit" value="Envoyer" id="ajoutNewWork">Valider</button>
+			</form>
+		</div>
+	</div>
 </div>
 
 <footer>
