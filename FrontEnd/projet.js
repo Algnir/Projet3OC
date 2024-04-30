@@ -16,6 +16,7 @@ const footer = document.querySelector("footer");
 const body = document.querySelector("body");
 const divFiltres = document.querySelector(".filtres");
 const login = document.getElementById("login");
+const boutonModifier = document.getElementById("modifier");
 
 
 function genererWorks(works){ // fonction pour générer les photos dans la section portFolio à partir du serveur //
@@ -142,6 +143,7 @@ login.addEventListener("click", function (){
         logout();
         login.innerText = "login";
         divFiltres.classList.remove("none");
+        boutonModifier.classList.add("none");
     }
 })
 
@@ -158,6 +160,7 @@ contact.addEventListener("click", function (){
 if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){
     login.innerText = "logout";
     divFiltres.classList.add("none");
+    boutonModifier.classList.remove("none");
 }
 
 //Fonction envoye du formulaire pour connexion et récupération de l'userId et du token//
@@ -186,7 +189,8 @@ export function connexion() {
                 main.classList.remove("none");
                 pageLogin.classList.add("none");
                 const divFiltres = document.querySelector(".filtres");
-                divFiltres.classList.add("none")
+                divFiltres.classList.add("none");
+                boutonModifier.classList.remove("none");
             }
             else {
                 alert("E-mail ou mdp incorrect");
