@@ -1,18 +1,22 @@
+//Requete récup des travaux//
 const reponse = await fetch("http://localhost:5678/api/works");
 const works = await reponse.json();
 
+//Requete récup des catégories//
 const reponse2 = await fetch("http://localhost:5678/api/categories");
 const categories = await reponse2.json();
 
 connexion();
 
+
+// Récupération des éléments //
 const porfolio = document.querySelector("#portfolio");//selection de la section portfolio//
 const gallery = document.querySelector(".gallery"); //selection de la div gallery dans la section portfolio//
 const footer = document.querySelector("footer");
 const body = document.querySelector("body");
+const divFiltres = document.querySelector(".filtres");
+const login = document.getElementById("login");
 
-
-/*const buttonList = [Tous,Objets,Appartements,Hotels & Restaurants];*/
 
 function genererWorks(works){ // fonction pour générer les photos dans la section portFolio à partir du serveur //
     for (let i = 0; i < works.length; i++) {
@@ -34,11 +38,12 @@ function genererWorks(works){ // fonction pour générer les photos dans la sect
 
 }
 
+
 function genererFiltre(categories){;
     const buttonElement = document.createElement("button");
     buttonElement.id = "0";
     buttonElement.innerText = "Tous";
-    portfolio.insertBefore(buttonElement,gallery);//création du boutton Tous//
+    divFiltres.appendChild(buttonElement);//création du boutton Tous//
 
     for (let i = 0; i < categories.length; i++) {//création des bouttons catégories//
         const item = categories[i];
@@ -48,10 +53,11 @@ function genererFiltre(categories){;
         buttonElement.innerText = item.name;
 
 
-        portfolio.insertBefore(buttonElement,gallery);
+        divFiltres.appendChild(buttonElement);
     }
-
-
+    if (login.innerText == "logout"){
+        divFiltres.classList.add("none");
+    }
 }
 genererWorks(works);
 
@@ -61,6 +67,8 @@ genererFiltre(categories);
 
 
 //fonction des boutons filtres//
+
+
 const boutonTous = document.getElementById("0");
 boutonTous.classList.add("clicked");// affichage de Tous par défaut//
 boutonTous.addEventListener("click", function () {
@@ -116,11 +124,15 @@ boutonHotelsetRestaurants.addEventListener("click", function () {
 
 
 //page de login//
+//récupération des éléments page de connexion//
 
-const login = document.getElementById("login");
-if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){
-    login.innerText = "Logout"
-}
+const projet = document.getElementById("projet");
+const contact = document.getElementById("pagecontact");
+const main = document.getElementById("main");
+const pageLogin = document.getElementById("pageLogin");
+
+
+//Action des li de la navbar//
 
 login.addEventListener("click", function (){
     if(login.innerText == "login"){
@@ -128,16 +140,10 @@ login.addEventListener("click", function (){
     pageLogin.classList.remove("none");
     }else {
         logout();
-        login.innerText = "login"
+        login.innerText = "login";
+        divFiltres.classList.remove("none");
     }
 })
-
-
-const projet = document.getElementById("projet");
-const contact = document.getElementById("pagecontact");
-const main = document.getElementById("main");
-const pageLogin = document.getElementById("pageLogin");
-
 
 projet.addEventListener("click", function (){
     main.classList.remove("none");
@@ -149,6 +155,10 @@ contact.addEventListener("click", function (){
     pageLogin.classList.add("none");
 })
 
+if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){
+    login.innerText = "logout";
+    divFiltres.classList.add("none");
+}
 
 //Fonction envoye du formulaire pour connexion et récupération de l'userId et du token//
 export function connexion() {
@@ -162,7 +172,7 @@ export function connexion() {
             "password": password.value,
         };
         const chargeUtile = JSON.stringify(Users);
-        try {fetch("http://localhost:5678/api/users/login", {
+        fetch("http://localhost:5678/api/users/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body : chargeUtile
@@ -172,16 +182,19 @@ export function connexion() {
             window.localStorage.setItem("userId",login.userId);
             if (window.localStorage.getItem("token") !== 'undefined') {
                 const login = document.getElementById("login");
-                login.innerText = "Logout";
+                login.innerText = "logout";
+                main.classList.remove("none");
+                pageLogin.classList.add("none");
+                const divFiltres = document.querySelector(".filtres");
+                divFiltres.classList.add("none")
             }
-            
-        })}catch (error){
-            console.error(error);
-        }
+            else {
+                alert("E-mail ou mdp incorrect");
+            }
         
+        })
     })
-    
-}
+} 
 
 
 function logout () {

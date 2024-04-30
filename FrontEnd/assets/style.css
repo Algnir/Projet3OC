@@ -217,6 +217,20 @@ button:hover{
 }
 
 
+.filtres{
+	display:flex;
+    flex-direction: row;
+	justify-content: center;
+}
+
+.filtres button {
+    margin: 2em 0.25em;
+}
+
+div.none{
+	display:none;
+}
+
 /* page Login*/
 div{
     display: flex;
@@ -253,5 +267,6 @@ button[type="submit"]{
 	border-radius: 60px ;
 }
 
-#pageLogin a{
+div#pageLogin {
+    margin: 10em;
 }
