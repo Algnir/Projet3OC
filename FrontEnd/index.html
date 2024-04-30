@@ -9,6 +9,13 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+	crossorigin="anonymous"
+	referrerpolicy="no-referrer"
+  	/>
 	<script type="module" src="projet.js"></script>
 </head>
 <body>
@@ -23,6 +30,34 @@
 		</ul>
 	</nav>
 </header>
+<div id="popup-overlay">
+	<div class="popup-content">
+		<div id="galerieModif">
+			<button><i class="fa-solid fa-xmark"></i></button>
+			<h3>Galerie photo</h3>
+			<div class="worksDelete"></div>
+			<button id="ajouterPhoto">Ajouter une photo</button>
+		</div>
+		<div id="ajoutPhoto">
+			<button><i class="fa-solid fa-arrow-left"></i></button>
+			<button><i class="fa-solid fa-xmark"></i></button>
+			<h3>Ajout photo</h3>
+			<form>
+				<label for="newWork"><img></label>
+				<input type="image" name="newWork" id="newWork">
+				<label for="titreNewWork">Titre</label>
+				<input type="text" name="titreNewWork" id="titreNewWork">
+				<label for="categoriesNewWork">Titre</label>
+				<select name="categoriesNewWork" id="categoriesNewWork">
+					<options>Objets</options>
+					<options>Appartements</options>
+					<options>Hotels&restaurants</options>
+				</select>
+				<button type="submit" value="Envoyer" id="ajoutNewWork">Valider</button>
+			</form>
+		</div>
+	</div>
+</div>
 <main id="main">
 	<section id="introduction">
 		<figure>
@@ -56,6 +91,7 @@
 		</form>
 	</section>
 </main>
+
 
 <div id="pageLogin" class="none">
 	<h2>Log in</h2>

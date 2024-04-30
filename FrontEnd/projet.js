@@ -205,3 +205,9 @@ function logout () {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
 }
+
+const popup = document.getElementById("popup-overlay");
+//popup modif//
+boutonModifier.addEventListener("click", function(){
+    popup.classList.add("open");
+})
