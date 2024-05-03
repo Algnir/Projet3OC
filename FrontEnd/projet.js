@@ -220,20 +220,72 @@ const boutonAjout = document.getElementById("ajouterPhoto");
 boutonModifier.addEventListener("click", function(){
     popup.classList.add("open");
     popupSupprimer.classList.add("open");
+    listWorksSupprimer(works);
 })
 
 boutonClosePopup.addEventListener("click", function(){
     popup.classList.remove("open");
     popupAjout.classList.remove("open");
     popupSupprimer.classList.remove("open");
+    boutonBackPopup.classList.remove("open");
 })
 
 boutonAjout.addEventListener("click", function(){
     popupAjout.classList.add("open");
     popupSupprimer.classList.remove("open");
+    boutonBackPopup.classList.add("open");
 })
 
 boutonBackPopup.addEventListener("click", function(){
     popupSupprimer.classList.add("open");
     popupAjout.classList.remove("open");
+    boutonBackPopup.classList.remove("open");
 })
+
+const worksDelete = document.querySelector(".worksDelete");
+
+function listWorksSupprimer(works){ // fonction pour générer les photos dans la section portFolio à partir du serveur //
+    worksDelete.innerHTML = ""
+    for (let i = 0; i < works.length; i++) {
+        const article = works[i];
+
+        const figureElement = document.createElement("figure");//création de la balise <figure>
+
+        const imageElement = document.createElement("img");
+        imageElement.src = article.imageUrl; // création et ajout de l'image dans la balise <img>
+
+        const buttonElement = document.createElement("button");
+        buttonElement.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+        buttonElement.id = article.id;
+        buttonElement.classList.add("boutonDelete");
+
+        worksDelete.appendChild(figureElement);// On rattache la balise figure à la div //
+        
+        figureElement.appendChild(imageElement);// On rattache la balise img à figure//
+        figureElement.appendChild(buttonElement);
+
+    }
+    const btnSupprimer = worksDelete.querySelectorAll(".boutonDelete"); //récupération des boutons supprimer
+    console.log(btnSupprimer);
+
+    btnSupprimer.forEach(function(btn) {
+        btn.addEventListener('click', function (event) {
+            event.preventDefault()
+            supprimer(btn);
+        })
+      });
+
+
+}
+
+function supprimer(btn){
+    const workId = btn.id;
+    const chargeUtile = JSON.stringify(workId);
+    fetch(`http://localhost:5678/api/works/${btn.id}`, {
+            method: "DELETE",
+            headers: { 
+                'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+            } 
+        }).then(listWorksSupprimer(works))
+}
+

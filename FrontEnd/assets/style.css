@@ -288,9 +288,11 @@ div#pageLogin {
 }
 
 .popup-content{
-	max-width:600px;
+	max-height: 525px;
+    height: 100%;
+	max-width:450px;
 	width:100%;
-	padding:30px;
+    padding: 30px 60px;
 	box-sizing: border-box;
 	background: white;
 	position:absolute;
@@ -306,10 +308,95 @@ div#pageLogin {
 #popup-supprimer{
 	display:none;
 }
+
 .fa-solid {
     color: var(--main-color);
 }
 
 .open{
 	display:block !important;
+}
+
+#backPopup{
+	display:none;
+}
+
+
+.worksDelete{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.worksDelete figure{
+    height: 90px;
+    width: 60px;
+    margin: 3px;
+}
+
+.worksDelete figure img{
+	width:100%
+}
+
+#popup-supprimer h3{
+	font-size: 16px;
+	text-align: center;
+    margin: 1.5em 0;
+}
+
+
+#backPopup{
+	border: none;
+	position: absolute;
+	background:none;
+	color:black;
+	transform: translate(-200%, -130%);
+}
+
+#closePopup{
+	border: none;
+	position: absolute;
+	background:none;
+	color:black;
+	transform: translate(200%, -130%);
+}
+
+#closePopup:hover{
+	color:black;
+}
+#backPopup:hover{
+	color:black;
+}
+
+.boutonDelete{
+    padding: 3px;
+    position: absolute;
+    color: white;
+    background: black;
+    border: none;
+    height: auto;
+    width: auto;
+    margin: 0;
+    min-width: auto;
+    transform: translate(-120%, 20%);
+    font-size: 0.5em;
+    border-radius: 20%;
+}
+
+.boutonDelete:hover{
+	color:black;
+	background:none;
+}
+
+#ajouterPhoto{
+	margin: 0;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 100%);
+}
+
+#ajoutNewWork{
+	margin: 0;
+	position: absolute;
+	left: 50%;		
+	transform: translate(-50%, 100%);
 }
