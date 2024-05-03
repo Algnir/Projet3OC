@@ -317,17 +317,6 @@ function ajoutNewWork() {
 } 
 
 ajoutNewWork();
-
-
-
-
-
-
-
-
-
-
-
 connexion();
 genererWorks(works);
 galleryWorksSuppression(works);
