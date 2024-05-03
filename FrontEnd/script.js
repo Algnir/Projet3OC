@@ -8,11 +8,15 @@ const reponse2 = await fetch("http://localhost:5678/api/categories");
 const categories = await reponse2.json();
 
 
-// Récupération des éléments //
+//***** Récupération des éléments ***** //
 const gallery = document.querySelector(".gallery"); //selection de la div gallery dans la section portfolio//
 const divFiltres = document.querySelector(".filtres");
 const login = document.getElementById("login");
 const boutonModifier = document.getElementById("modifier");
+const projet = document.getElementById("projet");
+const contact = document.getElementById("pagecontact");
+const main = document.getElementById("main");
+const pageLogin = document.getElementById("pageLogin");
 
 
 function genererWorks(works){// fonction pour générer les photos dans la section portFolio à partir du serveur //
@@ -59,8 +63,7 @@ function genererFiltre(categories){;
 
 genererFiltre(categories);
 
-//fonction des boutons filtres//
-
+//*****fonction des boutons filtres*****//
 
 const boutonTous = document.getElementById("0");
 boutonTous.classList.add("clicked");// affichage de Tous par défaut//
@@ -115,16 +118,6 @@ boutonHotelsetRestaurants.addEventListener("click", function () {
 });
 
 
-
-//page de login//
-//récupération des éléments page de connexion//
-
-const projet = document.getElementById("projet");
-const contact = document.getElementById("pagecontact");
-const main = document.getElementById("main");
-const pageLogin = document.getElementById("pageLogin");
-
-
 //Action des li de la navbar//
 
 login.addEventListener("click", function (){
@@ -155,6 +148,9 @@ if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStora
     boutonModifier.classList.remove("none");
 }
 
+
+
+//*****LOGIN*****//
 //Fonction envoye du formulaire pour connexion et récupération de l'userId et du token//
 export function connexion() {
     const formulaireLogin = document.querySelector("#formulaireLogin");
@@ -257,10 +253,9 @@ function galleryWorksSuppression(works){ // fonction pour générer les photos d
         figureElement.appendChild(buttonElement);
 
     }
+    SelectionBoutonSupprimer (works);
 
 }
-
-
 
 function SelectionBoutonSupprimer (works){
     const btnSupprimer = worksDelete.querySelectorAll(".boutonDelete"); //récupération des boutons supprimer
@@ -281,6 +276,61 @@ function SelectionBoutonSupprimer (works){
     });
 }
 
+//ajout Works//
+function ajoutNewWork() {
+    const ajoutPhoto = document.querySelector("#ajoutPhoto");
+    ajoutPhoto.addEventListener("submit", async function (event) {
+        event.preventDefault()
+        var formData = new FormData();
+        const img = event.target.querySelector("#newWork");
+        console.log(img);
+        const titre = event.target.querySelector("#titreNewWork");
+        const categories = event.target.querySelector("#categoriesNewWork");
+        formData.append('image',img.files[0]);
+        formData.append('title', titre.value);
+        formData.append('category', categories.value);
 
+        try {
+        const response = await fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+        },
+        body: formData
+        })
+
+        if (!response.ok) {
+                throw new Error('Échec du traitement de formulaire.');
+        }
+
+            console.log('Formulaire soumis avec succès.');
+
+        const reponse = await fetch("http://localhost:5678/api/works");
+        works = await reponse.json(); 
+        genererWorks(works);
+        galleryWorksSuppression(works);
+            
+    } catch(error) {
+            console.error(error);
+        };
+    });
+} 
+
+ajoutNewWork();
+
+
+
+
+
+
+
+
+
+
+
+connexion();
 genererWorks(works);
 galleryWorksSuppression(works);
+
+
+

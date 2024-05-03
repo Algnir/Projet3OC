@@ -93,16 +93,16 @@
 		</div>
 		<div id="popup-ajout">
 			<h3>Ajout photo</h3>
-			<form>
+			<form id="ajoutPhoto" enctype="multipart/form-data">
 				<label for="newWork"><img></label>
-				<input type="image" name="newWork" id="newWork">
+				<input type="file" name="newWork" id="newWork">
 				<label for="titreNewWork">Titre</label>
 				<input type="text" name="titreNewWork" id="titreNewWork">
 				<label for="categoriesNewWork">Titre</label>
 				<select name="categoriesNewWork" id="categoriesNewWork">
-					<options>Objets</options>
-					<options>Appartements</options>
-					<options>Hotels&restaurants</options>
+					<option value="1">Objets</option>
+					<option value="2">Appartements</option>
+					<option value="3">Hotels&restaurants</option>
 				</select>
 				<button type="submit" value="Envoyer" id="ajoutNewWork">Valider</button>
 			</form>
