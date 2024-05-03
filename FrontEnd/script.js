@@ -1,25 +1,22 @@
 //Requete récup des travaux//
 const reponse = await fetch("http://localhost:5678/api/works");
-const works = await reponse.json();
+let works = await reponse.json();
+
 
 //Requete récup des catégories//
 const reponse2 = await fetch("http://localhost:5678/api/categories");
 const categories = await reponse2.json();
 
-connexion();
-
 
 // Récupération des éléments //
-const porfolio = document.querySelector("#portfolio");//selection de la section portfolio//
 const gallery = document.querySelector(".gallery"); //selection de la div gallery dans la section portfolio//
-const footer = document.querySelector("footer");
-const body = document.querySelector("body");
 const divFiltres = document.querySelector(".filtres");
 const login = document.getElementById("login");
 const boutonModifier = document.getElementById("modifier");
 
 
-function genererWorks(works){ // fonction pour générer les photos dans la section portFolio à partir du serveur //
+function genererWorks(works){// fonction pour générer les photos dans la section portFolio à partir du serveur //
+    gallery.innerHTML = "" 
     for (let i = 0; i < works.length; i++) {
         const article = works[i];
 
@@ -38,7 +35,6 @@ function genererWorks(works){ // fonction pour générer les photos dans la sect
     }
 
 }
-
 
 function genererFiltre(categories){;
     const buttonElement = document.createElement("button");
@@ -60,12 +56,8 @@ function genererFiltre(categories){;
         divFiltres.classList.add("none");
     }
 }
-genererWorks(works);
 
 genererFiltre(categories);
-
-
-
 
 //fonction des boutons filtres//
 
@@ -220,7 +212,7 @@ const boutonAjout = document.getElementById("ajouterPhoto");
 boutonModifier.addEventListener("click", function(){
     popup.classList.add("open");
     popupSupprimer.classList.add("open");
-    listWorksSupprimer(works);
+    SelectionBoutonSupprimer ();
 })
 
 boutonClosePopup.addEventListener("click", function(){
@@ -244,7 +236,7 @@ boutonBackPopup.addEventListener("click", function(){
 
 const worksDelete = document.querySelector(".worksDelete");
 
-function listWorksSupprimer(works){ // fonction pour générer les photos dans la section portFolio à partir du serveur //
+function galleryWorksSuppression(works){ // fonction pour générer les photos dans la section portFolio à partir du serveur //
     worksDelete.innerHTML = ""
     for (let i = 0; i < works.length; i++) {
         const article = works[i];
@@ -265,27 +257,30 @@ function listWorksSupprimer(works){ // fonction pour générer les photos dans l
         figureElement.appendChild(buttonElement);
 
     }
+
+}
+
+
+
+function SelectionBoutonSupprimer (works){
     const btnSupprimer = worksDelete.querySelectorAll(".boutonDelete"); //récupération des boutons supprimer
-    console.log(btnSupprimer);
 
     btnSupprimer.forEach(function(btn) {
-        btn.addEventListener('click', function (event) {
-            event.preventDefault()
-            supprimer(btn);
+        btn.addEventListener('click', async function () {
+            await fetch(`http://localhost:5678/api/works/${btn.id}`, { //requête suppression de l'élément ou le btn a été cliqué
+                method: "DELETE",
+                headers: { 
+                    'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                } 
+            })
+            const reponse = await fetch("http://localhost:5678/api/works");
+            works = await reponse.json(); 
+            genererWorks(works);
+            galleryWorksSuppression(works);
         })
-      });
-
-
+    });
 }
 
-function supprimer(btn){
-    const workId = btn.id;
-    const chargeUtile = JSON.stringify(workId);
-    fetch(`http://localhost:5678/api/works/${btn.id}`, {
-            method: "DELETE",
-            headers: { 
-                'Authorization': `Bearer ${window.localStorage.getItem("token")}`
-            } 
-        }).then(listWorksSupprimer(works))
-}
 
+genererWorks(works);
+galleryWorksSuppression(works);
