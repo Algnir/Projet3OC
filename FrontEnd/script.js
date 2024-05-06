@@ -59,10 +59,10 @@ function genererFiltre(categories){// fonction pour générer les boutons filtre
     }
 
 
-    for (let i = 0; i < (categories.length+1); i++) {
+    for (let i = 0; i < (categories.length+1); i++) { //boucle action des boutons catégories//
         document.getElementById(i).addEventListener("click", function () {
-            for (let y = 0; y < (categories.length+1); y++){
-                document.getElementById(y).classList.remove("clicked");
+            for (let h = 0; h < (categories.length+1); h++){
+                document.getElementById(h).classList.remove("clicked");
             }
             document.getElementById(i).classList.add("clicked");
             if(i==0){// partie pour le bouton Tous
@@ -78,7 +78,7 @@ function genererFiltre(categories){// fonction pour générer les boutons filtre
     }
 
 
-    if (login.innerText == "logout"){
+    if (login.innerText == "logout"){//condition affichage des boutons filtres
         divFiltres.classList.add("none");
     }
 }
@@ -87,11 +87,11 @@ function genererFiltre(categories){// fonction pour générer les boutons filtre
 //Action des li de la navbar//
 
 login.addEventListener("click", function (){
-    if(login.innerText == "login"){
+    if(login.innerText == "login"){// condition qui amene à la page de login si pas log
     main.classList.add("none");
     pageLogin.classList.remove("none");
     login.classList.add("bold");
-    }else {
+    }else { // enleve le token et redonne l'accès à la page en mode visiteur
         logout();
         login.innerText = "login";
         divFiltres.classList.remove("none");
@@ -161,7 +161,7 @@ export function connexion() {
 } 
 
 
-function logout () {
+function logout () { //fonction qui supprime l'userid et le token pour la déconnexion 
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
 }
@@ -177,14 +177,13 @@ const boutonClosePopup = document.getElementById("closePopup");
 const boutonBackPopup = document.getElementById("backPopup");
 const boutonAjout = document.getElementById("ajouterPhoto");
 
-btnModifier.addEventListener("click", function(){
+btnModifier.addEventListener("click", function(){// bouton accès popup
     popup.classList.add("open");
     popupSupprimer.classList.add("open");
-
     SelectionBtnSupprimer(works);
 })
 
-boutonClosePopup.addEventListener("click", function(){
+boutonClosePopup.addEventListener("click", function(){ //bouton pour fermer la popup
     popup.classList.remove("open");
     popupAjout.classList.remove("open");
     popupSupprimer.classList.remove("open");
@@ -193,13 +192,13 @@ boutonClosePopup.addEventListener("click", function(){
     previewImage();
 })
 
-boutonAjout.addEventListener("click", function(){
+boutonAjout.addEventListener("click", function(){// bouton pour aller sur la popup ajout
     popupAjout.classList.add("open");
     popupSupprimer.classList.remove("open");
     boutonBackPopup.classList.add("open");
 })
 
-boutonBackPopup.addEventListener("click", function(){
+boutonBackPopup.addEventListener("click", function(){ //bouton pour retourner sur la popup delete
     popupSupprimer.classList.add("open");
     popupAjout.classList.remove("open");
     boutonBackPopup.classList.remove("open");
@@ -207,9 +206,10 @@ boutonBackPopup.addEventListener("click", function(){
     previewImage();
 })
 
-const worksDelete = document.querySelector(".worksDelete");
 
+const worksDelete = document.querySelector(".worksDelete");
 function galleryWorksSuppression(works){ // fonction pour générer les photos dans la popup-delete à partir du serveur //
+    
     worksDelete.innerHTML = ""
     for (let i = 0; i < works.length; i++) {
         const article = works[i];
@@ -254,7 +254,7 @@ function SelectionBtnSupprimer (works){
 }
 
 //popup ajout//
-function ajoutNewWork() {
+function ajoutNewWork() { //fonction ajout d'une nouvelle photo
     const ajoutPhoto = document.querySelector("#ajoutPhoto");
     ajoutPhoto.addEventListener("submit", async function (event) {
         event.preventDefault()
