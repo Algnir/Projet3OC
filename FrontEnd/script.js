@@ -216,7 +216,7 @@ btnModifier.addEventListener("click", function(){
     popup.classList.add("open");
     popupSupprimer.classList.add("open");
 
-    SelectionBoutonSupprimer ();
+    SelectionBtnSupprimer(works);
 })
 
 boutonClosePopup.addEventListener("click", function(){
@@ -295,7 +295,6 @@ function ajoutNewWork() {
         event.preventDefault()
         var formData = new FormData();
         const img = event.target.querySelector("#newWork");
-        console.log(img);
         const titre = event.target.querySelector("#titreNewWork");
         const categories = event.target.querySelector("#categoriesNewWork");
         formData.append('image',img.files[0]);
@@ -331,7 +330,7 @@ function ajoutNewWork() {
 }
 
 
-function previewImage(){
+function previewImage(){//fonction chargement image insérer//
     const input = document.getElementById('newWork');
     const preview = document.getElementById('previewImage');
     const inputPhoto = document.getElementById("btnAjoutPhoto");
@@ -356,30 +355,9 @@ function previewImage(){
 }
 
 
-document.getElementById('newWork').addEventListener('change', function(event) { //fonction chargement image insérer
-    const input = event.target;
-    const preview = document.getElementById('previewImage');
-    const inputPhoto = document.getElementById("btnAjoutPhoto");
-
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-        };
-
-        reader.readAsDataURL(input.files[0]);
-        preview.classList.remove("none");
-        inputPhoto.classList.add("none");
-
-    }
-    else {
-        preview.classList.add("none");
-        inputPhoto.classList.remove("none");
-    }
+document.getElementById('newWork').addEventListener('change', function(event) {
+    previewImage()
 });
-
-
 
 
 function resetFormulaire(){
