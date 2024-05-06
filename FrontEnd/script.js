@@ -124,6 +124,7 @@ login.addEventListener("click", function (){
     if(login.innerText == "login"){
     main.classList.add("none");
     pageLogin.classList.remove("none");
+    login.classList.add("bold");
     }else {
         logout();
         login.innerText = "login";
@@ -135,11 +136,15 @@ login.addEventListener("click", function (){
 projet.addEventListener("click", function (){
     main.classList.remove("none");
     pageLogin.classList.add("none");
+    login.classList.remove("bold");
+    window.location.href="#projet";
 })
 
 contact.addEventListener("click", function (){
     main.classList.remove("none");
     pageLogin.classList.add("none");
+    login.classList.remove("bold");
+    window.location.href="#contact";
 })
 
 if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){
@@ -179,6 +184,7 @@ export function connexion() {
                 const divFiltres = document.querySelector(".filtres");
                 divFiltres.classList.add("none");
                 boutonModifier.classList.remove("none");
+                login.classList.remove("bold");
             }
             else {
                 alert("E-mail ou mdp incorrect");
@@ -208,6 +214,7 @@ const boutonAjout = document.getElementById("ajouterPhoto");
 boutonModifier.addEventListener("click", function(){
     popup.classList.add("open");
     popupSupprimer.classList.add("open");
+
     SelectionBoutonSupprimer ();
 })
 
@@ -257,11 +264,11 @@ function galleryWorksSuppression(works){ // fonction pour générer les photos d
         figureElement.appendChild(buttonElement);
 
     }
-    SelectionBoutonSupprimer (works);
+    SelectionBtnSupprimer (works);
 
 }
 
-function SelectionBoutonSupprimer (works){
+function SelectionBtnSupprimer (works){
     const btnSupprimer = worksDelete.querySelectorAll(".boutonDelete"); //récupération des boutons supprimer
 
     btnSupprimer.forEach(function(btn) {

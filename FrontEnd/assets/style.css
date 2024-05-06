@@ -100,10 +100,13 @@ nav li {
 }
 
 li:hover {
-	color: #B1663C;
+	font-weight: bold;
 	cursor:pointer;
 }
 
+li.bold {
+	font-weight: bold;
+}
 
 #introduction {
 	display: flex;
@@ -168,7 +171,7 @@ li:hover {
 }
 
 #contact input {
-	height: 50px;
+	height: 2em;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -190,6 +193,20 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+input[type="submit"]:hover{
+	background-color: #0E2F28;
+	cursor:pointer;
+}
+
+footer {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    right: 0;
 }
 
 footer nav ul {
@@ -214,7 +231,7 @@ button {
 
 button:hover{
 	color: white;
-    background-color: #1D6154;
+    background-color: #0E2F28;
 	cursor:pointer;
 }
 
@@ -235,12 +252,13 @@ button:hover{
 }
 
 .filtres button {
-    margin: 2em 0.25em;
+	margin: 0em 0.25em 2em 0.25em;
+	height:2em;
 }
 
 .section-title{
 	justify-content: center;
-	margin-bottom: 2em;
+	margin: 5em;
 }
 
 button#modifier {
@@ -278,6 +296,7 @@ div{
 
 #formulaireLogin input {
 	height: 50px;
+	width:350px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -296,6 +315,15 @@ button[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+button[type="submit"]:hover{
+	background-color: #0E2F28;
+	cursor:pointer;
+}
+
+#pageLogin a {
+	color:black;
+	font-style: 'Syne';
 }
 
 div#pageLogin {
