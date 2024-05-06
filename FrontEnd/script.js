@@ -216,6 +216,8 @@ boutonClosePopup.addEventListener("click", function(){
     popupAjout.classList.remove("open");
     popupSupprimer.classList.remove("open");
     boutonBackPopup.classList.remove("open");
+    resetFormulaire();
+    previewImage();
 })
 
 boutonAjout.addEventListener("click", function(){
@@ -228,6 +230,8 @@ boutonBackPopup.addEventListener("click", function(){
     popupSupprimer.classList.add("open");
     popupAjout.classList.remove("open");
     boutonBackPopup.classList.remove("open");
+    resetFormulaire();
+    previewImage();
 })
 
 const worksDelete = document.querySelector(".worksDelete");
@@ -309,12 +313,67 @@ function ajoutNewWork() {
         works = await reponse.json(); 
         genererWorks(works);
         galleryWorksSuppression(works);
+        resetFormulaire();
+        previewImage();
             
     } catch(error) {
             console.error(error);
         };
     });
-} 
+}
+
+document.getElementById('newWork').addEventListener('change', function(event) { //fonction chargement image insérer
+    const input = event.target;
+    const preview = document.getElementById('previewImage');
+    const inputPhoto = document.getElementById("btnAjoutPhoto");
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        preview.classList.remove("none");
+        inputPhoto.classList.add("none");
+
+    }
+    else {
+        preview.classList.add("none");
+        inputPhoto.classList.remove("none");
+    }
+});
+
+function previewImage(){
+    const input = document.getElementById('newWork');
+    const preview = document.getElementById('previewImage');
+    const inputPhoto = document.getElementById("btnAjoutPhoto");
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        preview.classList.remove("none");
+        inputPhoto.classList.add("none");
+
+    }
+    else {
+        preview.classList.add("none");
+        inputPhoto.classList.remove("none");
+    
+    }
+}
+
+
+function resetFormulaire(){
+    const ajoutPhoto = document.querySelector("#ajoutPhoto");
+    ajoutPhoto.reset();
+}
 
 ajoutNewWork();
 connexion();
