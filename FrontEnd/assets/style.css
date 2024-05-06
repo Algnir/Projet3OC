@@ -114,6 +114,10 @@ li.bold {
 	font-weight: bold;
 }
 
+nav img {
+    height: 20px;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
