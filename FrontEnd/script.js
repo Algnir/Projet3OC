@@ -10,13 +10,13 @@ const categories = await reponse2.json();
 
 //***** Récupération des éléments ***** //
 const gallery = document.querySelector(".gallery"); //selection de la div gallery dans la section portfolio//
-const divFiltres = document.querySelector(".filtres");
-const login = document.getElementById("login");
-const boutonModifier = document.getElementById("modifier");
-const projet = document.getElementById("projet");
-const contact = document.getElementById("pagecontact");
-const main = document.getElementById("main");
-const pageLogin = document.getElementById("pageLogin");
+const divFiltres = document.querySelector(".filtres");//selection de la div ou seront les boutons filtres//
+const btnModifier = document.getElementById("modifier");//selection du bouton de la modal modifier//
+const projet = document.getElementById("projet");//selection du li projet de la navbar//
+const contact = document.getElementById("pagecontact");//selection du li contact de la navbar//
+const login = document.getElementById("login");///selection du li login de la navbar//
+const main = document.getElementById("main");//selection de la section main ou il y a le portfolio//
+const pageLogin = document.getElementById("pageLogin");//selection de la div login pour la dite page//
 
 
 function genererWorks(works){// fonction pour générer les photos dans la section portFolio à partir du serveur //
@@ -40,7 +40,8 @@ function genererWorks(works){// fonction pour générer les photos dans la secti
 
 }
 
-function genererFiltre(categories){;
+
+function genererFiltre(categories){// fonction pour générer les boutons filtres en fonction des catégories//
     const buttonElement = document.createElement("button");
     buttonElement.id = "0";
     buttonElement.innerText = "Tous";
@@ -129,7 +130,7 @@ login.addEventListener("click", function (){
         logout();
         login.innerText = "login";
         divFiltres.classList.remove("none");
-        boutonModifier.classList.add("none");
+        btnModifier.classList.add("none");
     }
 })
 
@@ -150,7 +151,7 @@ contact.addEventListener("click", function (){
 if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){
     login.innerText = "logout";
     divFiltres.classList.add("none");
-    boutonModifier.classList.remove("none");
+    btnModifier.classList.remove("none");
 }
 
 
@@ -183,7 +184,7 @@ export function connexion() {
                 pageLogin.classList.add("none");
                 const divFiltres = document.querySelector(".filtres");
                 divFiltres.classList.add("none");
-                boutonModifier.classList.remove("none");
+                btnModifier.classList.remove("none");
                 login.classList.remove("bold");
             }
             else {
@@ -211,7 +212,7 @@ const boutonClosePopup = document.getElementById("closePopup");
 const boutonBackPopup = document.getElementById("backPopup");
 const boutonAjout = document.getElementById("ajouterPhoto");
 
-boutonModifier.addEventListener("click", function(){
+btnModifier.addEventListener("click", function(){
     popup.classList.add("open");
     popupSupprimer.classList.add("open");
 
@@ -243,7 +244,7 @@ boutonBackPopup.addEventListener("click", function(){
 
 const worksDelete = document.querySelector(".worksDelete");
 
-function galleryWorksSuppression(works){ // fonction pour générer les photos dans la section portFolio à partir du serveur //
+function galleryWorksSuppression(works){ // fonction pour générer les photos dans la popup-delete à partir du serveur //
     worksDelete.innerHTML = ""
     for (let i = 0; i < works.length; i++) {
         const article = works[i];
@@ -287,7 +288,7 @@ function SelectionBtnSupprimer (works){
     });
 }
 
-//ajout Works//
+//popup ajout//
 function ajoutNewWork() {
     const ajoutPhoto = document.querySelector("#ajoutPhoto");
     ajoutPhoto.addEventListener("submit", async function (event) {
@@ -329,28 +330,6 @@ function ajoutNewWork() {
     });
 }
 
-document.getElementById('newWork').addEventListener('change', function(event) { //fonction chargement image insérer
-    const input = event.target;
-    const preview = document.getElementById('previewImage');
-    const inputPhoto = document.getElementById("btnAjoutPhoto");
-
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-        };
-
-        reader.readAsDataURL(input.files[0]);
-        preview.classList.remove("none");
-        inputPhoto.classList.add("none");
-
-    }
-    else {
-        preview.classList.add("none");
-        inputPhoto.classList.remove("none");
-    }
-});
 
 function previewImage(){
     const input = document.getElementById('newWork');
@@ -375,6 +354,32 @@ function previewImage(){
     
     }
 }
+
+
+document.getElementById('newWork').addEventListener('change', function(event) { //fonction chargement image insérer
+    const input = event.target;
+    const preview = document.getElementById('previewImage');
+    const inputPhoto = document.getElementById("btnAjoutPhoto");
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        preview.classList.remove("none");
+        inputPhoto.classList.add("none");
+
+    }
+    else {
+        preview.classList.add("none");
+        inputPhoto.classList.remove("none");
+    }
+});
+
+
 
 
 function resetFormulaire(){
