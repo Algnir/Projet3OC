@@ -57,66 +57,31 @@ function genererFiltre(categories){// fonction pour générer les boutons filtre
 
         divFiltres.appendChild(buttonElement);
     }
+
+
+    for (let i = 0; i < (categories.length+1); i++) {
+        document.getElementById(i).addEventListener("click", function () {
+            for (let y = 0; y < (categories.length+1); y++){
+                document.getElementById(y).classList.remove("clicked");
+            }
+            document.getElementById(i).classList.add("clicked");
+            if(i==0){// partie pour le bouton Tous
+                gallery.innerHTML = "";
+                genererWorks(works);
+            } else{
+                const filterWorks = works.filter((work) => work.category.name == categories[i-1].name);
+
+                gallery.innerHTML = "";//supression de la galerie sinon on aura les images d'avant qui se rajoute//
+                genererWorks(filterWorks);//generation de la galleries//
+            }
+        });
+    }
+
+
     if (login.innerText == "logout"){
         divFiltres.classList.add("none");
     }
 }
-
-genererFiltre(categories);
-
-//*****fonction des boutons filtres*****//
-
-const boutonTous = document.getElementById("0");
-boutonTous.classList.add("clicked");// affichage de Tous par défaut//
-boutonTous.addEventListener("click", function () {
-
-    boutonTous.classList.add("clicked");
-    boutonAppartements.classList.remove("clicked");
-    boutonObjets.classList.remove("clicked");
-    boutonHotelsetRestaurants.classList.remove("clicked");
-
-    gallery.innerHTML = "";//supression de la galerie sinon on aura les images d'avant qui se rajoute//
-    genererWorks(works);//generation de la galleries//
-});
-
-const boutonObjets = document.getElementById("1");
-boutonObjets.addEventListener("click", function () {
-
-    boutonObjets.classList.add("clicked");// ajout de la class pour le css et supression pour les autres boutons//
-    boutonAppartements.classList.remove("clicked");
-    boutonTous.classList.remove("clicked");
-    boutonHotelsetRestaurants.classList.remove("clicked");
-
-    const objetsWorks = works.filter((work) => work.category.name == "Objets" )//création de la liste avec que objets//
-    gallery.innerHTML = "";//supression de la galerie sinon on aura les images d'avant qui se rajoute//
-    genererWorks(objetsWorks);//affichage de la nouvelle liste//
-});
-
-const boutonAppartements = document.getElementById("2");
-boutonAppartements.addEventListener("click", function () {
-
-    boutonAppartements.classList.add("clicked");// ajout de la class pour le css et supression pour les autres boutons//
-    boutonTous.classList.remove("clicked");
-    boutonObjets.classList.remove("clicked");
-    boutonHotelsetRestaurants.classList.remove("clicked");
-
-    const AppartementsWorks = works.filter((work) => work.category.name == "Appartements" )//création de la liste avec que appartements//
-    gallery.innerHTML = "";//supression de la galerie sinon on aura les images d'avant qui se rajoute//
-    genererWorks(AppartementsWorks);//affichage de la nouvelle liste//
-});
-
-const boutonHotelsetRestaurants = document.getElementById("3");
-boutonHotelsetRestaurants.addEventListener("click", function () {
-
-    boutonHotelsetRestaurants.classList.add("clicked");// ajout de la class pour le css et supression pour les autres boutons//
-    boutonAppartements.classList.remove("clicked");
-    boutonObjets.classList.remove("clicked");
-    boutonTous.classList.remove("clicked");
-
-    const HotelsetRestaurantsWorks = works.filter((work) => work.category.name == "Hotels & restaurants" )//création de la liste avec que hotels et restaurants//
-    gallery.innerHTML = "";//supression de la galerie sinon on aura les images d'avant qui se rajoute//
-    genererWorks(HotelsetRestaurantsWorks);//affichage de la nouvelle liste//
-});
 
 
 //Action des li de la navbar//
@@ -365,10 +330,14 @@ function resetFormulaire(){
     ajoutPhoto.reset();
 }
 
-ajoutNewWork();
-connexion();
+
+//******** initialisation des fonctions ********/
 genererWorks(works);
+genererFiltre(categories);
+connexion();
 galleryWorksSuppression(works);
+ajoutNewWork();
+
 
 
 
