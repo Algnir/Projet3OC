@@ -151,6 +151,7 @@ export function connexion() {
                 divFiltres.classList.add("none");
                 btnModifier.classList.remove("none");
                 login.classList.remove("bold");
+                indow.location.href="#projet"; // sinon quand la page login se ferme on arrive sur contact
             }
             else {
                 alert("E-mail ou mdp incorrect");
