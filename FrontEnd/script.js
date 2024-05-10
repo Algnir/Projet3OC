@@ -246,7 +246,7 @@ function SelectionBtnSupprimer (works){
                     'Authorization': `Bearer ${window.localStorage.getItem("token")}`
                 } 
             })
-            const reponse = await fetch("http://localhost:5678/api/works");
+            const reponse = await fetch("http://localhost:5678/api/works"); //réactualisation de la liste des travaux
             works = await reponse.json(); 
             genererWorks(works);
             galleryWorksSuppression(works);
@@ -259,7 +259,7 @@ function ajoutNewWork() { //fonction ajout d'une nouvelle photo
     const ajoutPhoto = document.querySelector("#ajoutPhoto");
     ajoutPhoto.addEventListener("submit", async function (event) {
         event.preventDefault()
-        var formData = new FormData();
+        var formData = new FormData(); //body à envoyé dans la requête
         const img = event.target.querySelector("#newWork");
         const titre = event.target.querySelector("#titreNewWork");
         const categories = event.target.querySelector("#categoriesNewWork");
@@ -268,7 +268,7 @@ function ajoutNewWork() { //fonction ajout d'une nouvelle photo
         formData.append('category', categories.value);
 
         try {
-        const response = await fetch('http://localhost:5678/api/works', {
+        const response = await fetch('http://localhost:5678/api/works', { //requête envoye donnée avec le token gardé en mémoire
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${window.localStorage.getItem("token")}`
@@ -282,11 +282,11 @@ function ajoutNewWork() { //fonction ajout d'une nouvelle photo
 
             console.log('Formulaire soumis avec succès.');
 
-        const reponse = await fetch("http://localhost:5678/api/works");
+        const reponse = await fetch("http://localhost:5678/api/works"); //réactualisation de la liste des travaux
         works = await reponse.json(); 
         genererWorks(works);
         galleryWorksSuppression(works);
-        resetFormulaire();
+        resetFormulaire();//reset du formulaire après ajout
         previewImage();
             
     } catch(error) {
@@ -302,26 +302,26 @@ function previewImage(){//fonction chargement image insérer//
     const inputPhoto = document.getElementById("btnAjoutPhoto");
 
     if (input.files && input.files[0]) {
-        const reader = new FileReader();
+        const reader = new FileReader(); 
 
         reader.onload = function(e) {
-            preview.src = e.target.result;
+            preview.src = e.target.result; // changement de la source de l'img pour mettre le fichier lu
         };
 
-        reader.readAsDataURL(input.files[0]);
-        preview.classList.remove("none");
+        reader.readAsDataURL(input.files[0]); //lecture du fichier jpg/png
+        preview.classList.remove("none");//affichage de l'image
         inputPhoto.classList.add("none");
 
     }
     else {
-        preview.classList.add("none");
+        preview.classList.add("none");// si il n'y pas d'image affiche le bouton ajout image
         inputPhoto.classList.remove("none");
     
     }
 }
 
 
-document.getElementById('newWork').addEventListener('change', function(event) {
+document.getElementById('newWork').addEventListener('change', function(event) { //lecture de la fonction preview quand on input un fichier
     previewImage()
 });
 
