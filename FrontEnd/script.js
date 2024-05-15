@@ -100,6 +100,7 @@ projet.addEventListener("click", function (){//quitte la page login et va à la 
     main.classList.remove("none");
     pageLogin.classList.add("none");
     login.classList.remove("bold");
+    resetFormulaireLogin();
     window.location.href="#projet";
 })
 
@@ -107,6 +108,7 @@ contact.addEventListener("click", function (){//quitte la page login et va à la
     main.classList.remove("none");
     pageLogin.classList.add("none");
     login.classList.remove("bold");
+    resetFormulaireLogin();
     window.location.href="#contact";
 })
 
@@ -133,6 +135,7 @@ export function connexion() {
     const formulaireLogin = document.querySelector("#formulaireLogin");
     formulaireLogin.addEventListener("submit",async function (event) {
         event.preventDefault()
+        const errorMsg = document.querySelector(".errorLogin");
         const email = event.target.querySelector("#emailLogin");// récupération du formulaire pour en faire la charge utile à envoyer
         const password = event.target.querySelector("#mdp");
         const Users = {
@@ -151,14 +154,13 @@ export function connexion() {
             if (!response.ok){
                 email.classList.add("error-login");
                 password.classList.add("error-login");
-                alert("E-mail ou mdp incorrect");
+                errorMsg.classList.remove("none");
             }else {
                 const user = await response.json();
                 window.localStorage.setItem("token",user.token);
                 window.localStorage.setItem("userId",user.userId);
                 verifToken();
-                email.classList.remove("error-login");
-                password.classList.remove("error-login");
+                resetFormulaireLogin();
                 main.classList.remove("none");
                 pageLogin.classList.add("none");
                 const divFiltres = document.querySelector(".filtres");
@@ -202,7 +204,7 @@ boutonClosePopup.addEventListener("click", function(){ //bouton pour fermer la p
     popupAjout.classList.remove("open");
     popupSupprimer.classList.remove("open");
     boutonBackPopup.classList.remove("open");
-    resetFormulaire();
+    resetFormulairePhoto();
     previewImage();
 })
 
@@ -216,7 +218,7 @@ boutonBackPopup.addEventListener("click", function(){ //bouton pour retourner su
     popupSupprimer.classList.add("open");
     popupAjout.classList.remove("open");
     boutonBackPopup.classList.remove("open");
-    resetFormulaire();
+    resetFormulairePhoto();
     previewImage();
 })
 
@@ -297,7 +299,7 @@ function ajoutNewWork() { //fonction ajout d'une nouvelle photo
         works = await reponse.json(); 
         genererWorks(works);
         galleryWorksSuppression(works);
-        resetFormulaire();//reset du formulaire après ajout
+        resetFormulairePhoto();//reset du formulaire après ajout
         previewImage();
             
     } catch(error) {
@@ -337,9 +339,20 @@ document.getElementById('newWork').addEventListener('change', function(event) { 
 });
 
 
-function resetFormulaire(){
+function resetFormulairePhoto(){
     const ajoutPhoto = document.querySelector("#ajoutPhoto");
     ajoutPhoto.reset();
+}
+
+function resetFormulaireLogin(){
+    const login = document.querySelector("#formulaireLogin");
+    const errorMsg = document.querySelector(".errorLogin");
+    const email = document.querySelector("#emailLogin");// récupération du formulaire pour en faire la charge utile à envoyer
+    const password = document.querySelector("#mdp");
+    email.classList.remove("error-login");
+    password.classList.remove("error-login");
+    errorMsg.classList.add("none");
+    login.reset();
 }
 
 

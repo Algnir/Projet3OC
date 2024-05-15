@@ -344,6 +344,22 @@ div#pageLogin {
     border: solid #E84229;
 }
 
+.errorLogin{
+	display:flex;
+	border: solid #E84229;
+	background-color: #E84229;
+	height: 50px;
+    width: 350px;
+	font-size: 1.2em;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	text-align: center;
+	justify-content: center;
+	border-radius:5px;
+}
+.errorLogin p{
+	color:white;
+}
+
 /*Popup*/
 
 #popup-overlay{
