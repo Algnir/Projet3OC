@@ -2,13 +2,12 @@
 const reponse = await fetch("http://localhost:5678/api/works");
 let works = await reponse.json();
 
-
 //Requete récup des catégories//
 const reponse2 = await fetch("http://localhost:5678/api/categories");
 const categories = await reponse2.json();
 
 
-//***** Récupération des éléments ***** //
+//***** Récupération des éléments HTML***** //
 const gallery = document.querySelector(".gallery"); //selection de la div gallery dans la section portfolio//
 const divFiltres = document.querySelector(".filtres");//selection de la div ou seront les boutons filtres//
 const btnModifier = document.getElementById("modifier");//selection du bouton de la modal modifier//
@@ -99,21 +98,21 @@ login.addEventListener("click", function (){
     }
 })
 
-projet.addEventListener("click", function (){
+projet.addEventListener("click", function (){//quitte la page login et va à la section projet//
     main.classList.remove("none");
     pageLogin.classList.add("none");
     login.classList.remove("bold");
     window.location.href="#projet";
 })
 
-contact.addEventListener("click", function (){
+contact.addEventListener("click", function (){//quitte la page login et va à la section contact//
     main.classList.remove("none");
     pageLogin.classList.add("none");
     login.classList.remove("bold");
     window.location.href="#contact";
 })
 
-if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){
+if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){ //affichage logout ou login//
     login.innerText = "logout";
     divFiltres.classList.add("none");
     btnModifier.classList.remove("none");
@@ -125,24 +124,29 @@ if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStora
 //Fonction envoye du formulaire pour connexion et récupération de l'userId et du token//
 export function connexion() {
     const formulaireLogin = document.querySelector("#formulaireLogin");
-    formulaireLogin.addEventListener("submit", function (event) {
+    formulaireLogin.addEventListener("submit",async function (event) {
         event.preventDefault()
-        const email = event.target.querySelector("#emailLogin");
+        const email = event.target.querySelector("#emailLogin");// récupération du formulaire pour en faire la charge utile à envoyer
         const password = event.target.querySelector("#mdp");
         const Users = {
             "email": email.value,
             "password": password.value,
         };
         const chargeUtile = JSON.stringify(Users);
-        fetch("http://localhost:5678/api/users/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body : chargeUtile
-        }).then(reponse =>reponse.json())
-        .then(login => {
-            window.localStorage.setItem("token",login.token);
-            window.localStorage.setItem("userId",login.userId);
-            if (window.localStorage.getItem("token") !== 'undefined') {
+
+        try {
+            const response = await fetch("http://localhost:5678/api/users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body : chargeUtile
+            })
+
+            if (!response.ok){
+                alert("E-mail ou mdp incorrect");
+            }else {
+                const user = await response.json();
+                window.localStorage.setItem("token",user.token);
+                window.localStorage.setItem("userId",user.userId);
                 const login = document.getElementById("login");
                 login.innerText = "logout";
                 main.classList.remove("none");
@@ -151,15 +155,14 @@ export function connexion() {
                 divFiltres.classList.add("none");
                 btnModifier.classList.remove("none");
                 login.classList.remove("bold");
-                indow.location.href="#projet"; // sinon quand la page login se ferme on arrive sur contact
+                window.location.href="#projet"; // sinon quand la page login se ferme on arrive sur contact
             }
-            else {
-                alert("E-mail ou mdp incorrect");
-            }
-        
-        })
+            
+        }catch(error) {
+            console.error(error);
+        }
     })
-} 
+}
 
 
 function logout () { //fonction qui supprime l'userid et le token pour la déconnexion 
