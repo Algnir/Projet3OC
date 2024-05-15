@@ -77,7 +77,7 @@ function genererFiltre(categories){// fonction pour générer les boutons filtre
     }
 
 
-    if (login.innerText == "logout"){//condition affichage des boutons filtres
+    if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){//condition affichage des boutons filtres
         divFiltres.classList.add("none");
     }
 }
@@ -86,15 +86,13 @@ function genererFiltre(categories){// fonction pour générer les boutons filtre
 //Action des li de la navbar//
 
 login.addEventListener("click", function (){
-    if(login.innerText == "login"){// condition qui amene à la page de login si pas log
+    if((window.localStorage.getItem("token") == 'undefined') || (window.localStorage.getItem("token") == null)){// condition qui amene à la page de login si pas log
     main.classList.add("none");
     pageLogin.classList.remove("none");
     login.classList.add("bold");
     }else { // enleve le token et redonne l'accès à la page en mode visiteur
         logout();
-        login.innerText = "login";
-        divFiltres.classList.remove("none");
-        btnModifier.classList.add("none");
+        verifToken();
     }
 })
 
@@ -112,11 +110,20 @@ contact.addEventListener("click", function (){//quitte la page login et va à la
     window.location.href="#contact";
 })
 
-if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){ //affichage logout ou login//
-    login.innerText = "logout";
-    divFiltres.classList.add("none");
-    btnModifier.classList.remove("none");
+
+function verifToken(){ // fonction qui vérifie si il y a un token de stocker et ajuste l'affichage en fonction //
+    if ((window.localStorage.getItem("token") !== 'undefined') && (window.localStorage.getItem("token") !== null)){ //affichage logout ou login//
+        login.innerText = "logout";
+        divFiltres.classList.add("none");
+        btnModifier.classList.remove("none");
+    }else{
+        login.innerText = "login"
+        divFiltres.classList.remove("none");
+        btnModifier.classList.add("none");
+    }
 }
+
+verifToken();
 
 
 
@@ -149,8 +156,7 @@ export function connexion() {
                 const user = await response.json();
                 window.localStorage.setItem("token",user.token);
                 window.localStorage.setItem("userId",user.userId);
-                const login = document.getElementById("login");
-                login.innerText = "logout";
+                verifToken();
                 email.classList.remove("error-login");
                 password.classList.remove("error-login");
                 main.classList.remove("none");
@@ -307,7 +313,7 @@ function previewImage(){//fonction chargement image insérer//
     const inputPhoto = document.getElementById("btnAjoutPhoto");
 
     if (input.files && input.files[0]) {
-        const reader = new FileReader(); 
+        const reader = new FileReader(); // ajout du reader pour la preview
 
         reader.onload = function(e) {
             preview.src = e.target.result; // changement de la source de l'img pour mettre le fichier lu
