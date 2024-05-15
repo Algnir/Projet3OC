@@ -142,6 +142,8 @@ export function connexion() {
             })
 
             if (!response.ok){
+                email.classList.add("error-login");
+                password.classList.add("error-login");
                 alert("E-mail ou mdp incorrect");
             }else {
                 const user = await response.json();
@@ -149,6 +151,8 @@ export function connexion() {
                 window.localStorage.setItem("userId",user.userId);
                 const login = document.getElementById("login");
                 login.innerText = "logout";
+                email.classList.remove("error-login");
+                password.classList.remove("error-login");
                 main.classList.remove("none");
                 pageLogin.classList.add("none");
                 const divFiltres = document.querySelector(".filtres");
@@ -282,8 +286,6 @@ function ajoutNewWork() { //fonction ajout d'une nouvelle photo
         if (!response.ok) {
                 throw new Error('Échec du traitement de formulaire.');
         }
-
-            console.log('Formulaire soumis avec succès.');
 
         const reponse = await fetch("http://localhost:5678/api/works"); //réactualisation de la liste des travaux
         works = await reponse.json(); 

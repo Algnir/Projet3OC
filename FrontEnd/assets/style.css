@@ -339,6 +339,10 @@ div#pageLogin {
     margin: 10em;
 }
 
+#formulaireLogin .error-login{
+    background-color: #ffe2da;
+    border: solid #E84229;
+}
 
 /*Popup*/
 
