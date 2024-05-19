@@ -90,6 +90,11 @@ login.addEventListener("click", function (){
     main.classList.add("none");
     pageLogin.classList.remove("none");
     login.classList.add("bold");
+    for (let h = 0; h < (categories.length+1); h++){ //enleve le bouton cliqué
+        document.getElementById(h).classList.remove("clicked");
+    }
+    gallery.innerHTML = ""; //regenere la galerie
+    genererWorks(works);
     }else { // enleve le token et redonne l'accès à la page en mode visiteur
         logout();
         verifToken();
