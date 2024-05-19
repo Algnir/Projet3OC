@@ -136,7 +136,7 @@ verifToken();
 
 //*****LOGIN*****//
 //Fonction envoye du formulaire pour connexion et récupération de l'userId et du token//
-export function connexion() {
+function connexion() {
     const formulaireLogin = document.querySelector("#formulaireLogin");
     formulaireLogin.addEventListener("submit",async function (event) {
         event.preventDefault()
